@@ -15,6 +15,7 @@ public:
 
         int l = 0, r = unique.size()-1;
         while(l<=r){
+          cout<<l<<" "<<r<<endl;
             int pivot = l;
             int firstLargeInd = pivot+1, lastSmallInd = pivot;
             for(int j = pivot+1;j<=r;j++){
