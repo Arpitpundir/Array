@@ -1,5 +1,12 @@
 class Solution {
 public:
+void print(vector<int> arr){
+    int n = arr.size();
+    for(int i=0;i<n;i++){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
     vector<int> topKFrequent(vector<int>& nums, int k) {
         unordered_map<int, int> elementFrequency;
         int n = nums.size();
@@ -14,25 +21,27 @@ public:
         }
 
         int l = 0, r = unique.size()-1;
-        while(l<=r){
-          cout<<l<<" "<<r<<endl;
+        while(l<r){
             int pivot = l;
-            int firstLargeInd = pivot+1, lastSmallInd = pivot;
-            for(int j = pivot+1;j<=r;j++){
+            int firstSmallInd = pivot+1, lastLargeInd = pivot;
+            int j = pivot+1;
+            while(j<=r){
                 if(elementFrequency[unique[j]] >= elementFrequency[unique[pivot]]){
-                    swap(unique[j], unique[firstLargeInd]);
-                    firstLargeInd++;
-                    lastSmallInd = j;
+                    swap(unique[j], unique[firstSmallInd]);
+                    lastLargeInd = firstSmallInd;
+                    firstSmallInd++;
                 }
+                j++;
             }
-            swap(unique[pivot], unique[lastSmallInd]);
-            if(lastSmallInd == k-1){
+            swap(unique[pivot], unique[lastLargeInd]);
+            if(lastLargeInd == k-1){
                 break;
-            }else if(lastSmallInd < k-1){
-                l = lastSmallInd+1;
+            }else if(lastLargeInd < k-1){
+                l = lastLargeInd+1;
             }else{
-                r = lastSmallInd-1;
+                r = lastLargeInd-1;
             }
+            //print(unique);
         }
         vector<int> ans;
         for(int i=0;i<k;i++){
